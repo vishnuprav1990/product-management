@@ -1,0 +1,19 @@
+/* You can add global styles to this file, and also import other style files */
+@import "~bootstrap/dist/css/bootstrap.css";
+@import "~font-awesome/css/font-awesome.css";
+.editBody{
+    width: 40%;
+}
+.itemCenter{
+    text-align: center;
+}
+.p-0{
+    padding: 0px;
+}
+.m-l-10{
+    margin-left: 10px;
+}
+.productImage{
+    height: 200px;
+    width: 200px;
+}

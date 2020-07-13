@@ -1,0 +1,10 @@
+.disabledArrow{
+    color: #bab7b7;
+}
+.enabledArrow{
+    color: black;
+}
+span > div{
+    height: 8px;
+    font-size: 16px;
+}

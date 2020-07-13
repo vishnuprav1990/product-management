@@ -1,0 +1,64 @@
+<div class="container col-md-12">
+  <div>
+    <button (click)="openModal(template,'add')" class="btn btn-info">Add Product</button>
+    <button [routerLink]="['/shopping']" routerLinkActive="router-link-active"  class="btn btn-info m-l-10" >Shop</button>
+    <button [routerLink]="['/category']" routerLinkActive="router-link-active"  class="btn btn-info m-l-10" >Category</button>
+    <button [routerLink]="['/cart']" routerLinkActive="router-link-active"  class="btn btn-info m-l-10" >Cart</button>
+  </div>
+  <h2 class="d-inline">All Products</h2>
+  <div class="col-4 float-right">
+    <app-search [initList]="initList" (productsResult)="captureResult($event)"></app-search>
+  </div>
+
+  <div class="table-responsive table-container">
+    <table class="table table-light table-hover table-striped" sortable-table (sorted)="onSorted($event)">
+      <thead class="thead-light">
+        <tr>
+          <th>Image</th>
+          <th sortable-column="pname">Product Name</th>
+          <th sortable-column="categoryId.cname">Category</th>
+          <th sortable-column="minPrice">Min Price($)</th>
+          <th sortable-column="maxPrice">Max Price($)</th>
+          <th sortable-column="buildTime">Build Time</th>
+          <th sortable-column="buildCost">Build Cost</th>
+          <th >Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let product of products">
+          <td class="itemCenter"><img src="{{product.imageUrl}}" height="40"></td>
+          <td>{{product.pname}}</td>
+          <td>{{product.categoryId?.cname}}</td>
+          <td>{{product.minPrice | currency : "USD" }}</td>
+          <td>{{product.maxPrice | currency : "USD" }}</td>
+          <td>{{product.buildTime}}</td>
+          <td>{{product.buildCost | currency : "USD" }}</td>
+
+          <td>
+            <button (click)="deleteProduct(product,confirmModal)" class="btn btn-danger" title="Delete"> <i class="fa fa-trash"></i></button>
+            <button (click)="openModal(template,'edit',product)" style="margin-left: 20px;" class="btn btn-warning" title="Edit"> <i class="fa fa-edit"></i></button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>
+<ng-template #template>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">{{modalTitle}}</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <app-edit-product [modalRef]="modalRef" [path]="actionMode" [productList]="products"></app-edit-product>
+  </div>
+</ng-template>
+<ng-template #confirmModal>
+  <div class="modal-body text-center">
+    <p>Do you want to delete the product?</p>
+    <button type="button" class="btn btn-default" (click)="confirm()" >Yes</button>
+    <button type="button" class="btn btn-primary" (click)="decline()" >No</button>
+  </div>
+</ng-template>

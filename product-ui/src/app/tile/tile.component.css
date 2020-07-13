@@ -1,0 +1,20 @@
+.cardTitle {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  max-width: 300px;
+  border-radius: 25px;
+  margin: 10px;
+  text-align: center;
+  font-family: arial;
+  min-height: 255px;
+}
+
+.price {
+  color: grey;
+  font-size: 22px;
+}
+
+.textWrap{
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}

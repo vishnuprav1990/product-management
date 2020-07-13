@@ -1,0 +1,87 @@
+
+<div class="container col-md-12">
+  <button type="button" class="btn btn-primary" (click)="openModal(template,'add')">Add Category</button>
+  <div class="table-responsive table-container">
+    <table class="table table-light table-hover table-striped" sortable-table (sorted)="onSorted($event)">
+      <thead class="thead-light">
+        <tr>
+          <th>Image</th>
+          <th sortable-column="cname">Category Name</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let category of categories">
+          <td class="itemCenter"><img src="{{category.imageUrl}}" height="40" *ngIf="category?.imageUrl"></td>
+          <td>{{category.cname}}</td>
+          <td>
+            <button (click)="deleteCategory(category)" class="btn btn-danger" title="Delete"> <i class="fa fa-trash"></i></button>
+            <button (click)="openModal(template,'edit',category)" style="margin-left: 20px;" class="btn btn-warning" title="Edit"> <i class="fa fa-edit"></i></button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+
+
+<ng-template #template>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">{{modalTitle}}</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div>
+      <div class="card">
+        <div class="card-body">
+          <div class="itemCenter">
+            <img class="card-img-top productImage" alt="Card image cap" src="{{imageUrl}}" *ngIf="category?.imageUrl">
+          </div>
+          <form [formGroup]="editForm" (ngSubmit)="onSubmit(actionMode)">
+            <div class="form-group col-12">
+              <label>Name:</label>
+              <input type="text" formControlName="cname" placeholder="Category Name" class="form-control"
+                [ngClass]="{ 'is-invalid': submitted && f.cname.errors }">
+              <div *ngIf="submitted && f.cname.errors">
+                <div *ngIf="f.cname.errors.required">Category Name is required</div>
+              </div>
+            </div>
+            <div class="progress form-group" *ngIf="progress > 0">
+              <div class="progress-bar progress-bar-striped bg-success" role="progressbar"
+                [style.width.%]="uploader.progress">
+              </div>
+            </div>
+            <div class="form-group file-upload col-12">
+              <label>Image:</label>
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <button type="button" class="input-group-text" (click)="uploader.uploadAll()"
+                    [disabled]="!uploader.getNotUploadedItems().length">
+                    Upload
+                  </button>
+                </div>
+                <div class="custom-file">
+                  <input type="file" name="image" class="custom-file-input" id="inputGroupFile01" ng2FileSelect
+                    [uploader]="uploader" accept="image/x-png,image/gif,image/jpeg" class="form-control-file"
+                    [ngClass]="{ 'is-invalid': submitted && f.fileUpload.errors }" />
+                  <label class="custom-file-label" for="inputGroupFile01">Choose Image file</label>
+                  <input type="hidden" formControlName="fileUpload">
+                </div>
+              </div>
+              <div *ngIf="submitted && f.fileUpload.errors">
+                <div *ngIf="f.fileUpload.errors.required">fileUpload is required</div>
+              </div>
+            </div>
+            <div class="col-12">
+              <button type="submit" class="btn btn-info">Save</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>

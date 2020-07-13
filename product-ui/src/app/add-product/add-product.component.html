@@ -1,0 +1,68 @@
+<div class="col-md-3">
+  <h2 class="text-center">Add Products</h2>
+  <form [formGroup]="addForm" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label>Name:</label>
+      <input type="text" formControlName="pname" placeholder="Product Name" class="form-control"
+        [ngClass]="{ 'is-invalid': submitted && f.pname.errors }">
+      <div *ngIf="submitted && f.pname.errors">
+        <div *ngIf="f.pname.errors.required">Product Name is required</div>
+      </div>
+    </div>
+
+    <div class="progress form-group" *ngIf="progress > 0">
+      <div class="progress-bar progress-bar-striped bg-success" role="progressbar" [style.width.%]="uploader.progress">
+      </div>
+    </div>
+    <div class="form-group file-upload">
+      <label>Image:</label>
+      <input type="file" name="image" ng2FileSelect [uploader]="uploader" accept="image/x-png,image/gif,image/jpeg"
+        class="form-control-file" [ngClass]="{ 'is-invalid': submitted && f.fileUpload.errors }" />
+      <input type="hidden" formControlName="fileUpload">
+      <button type="button" (click)="uploader.uploadAll()" [disabled]="!uploader.getNotUploadedItems().length">
+        Upload
+      </button>
+      <div *ngIf="submitted && f.fileUpload.errors">
+        <div *ngIf="f.fileUpload.errors.required">fileUpload is required</div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>Max Price ($):</label>
+      <input type="number" formControlName="maxPrice" placeholder="Max Price" class="form-control"
+        [ngClass]="{ 'is-invalid': submitted && f.maxPrice.errors }">
+      <div *ngIf="submitted && f.maxPrice.errors">
+        <div *ngIf="f.maxPrice.errors.required">Max Price is required</div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>Min Price ($):</label>
+      <input type="number" formControlName="minPrice" placeholder="Min Price" class="form-control"
+        [ngClass]="{ 'is-invalid': submitted && f.minPrice.errors }">
+      <div *ngIf="submitted && f.minPrice.errors">
+        <div *ngIf="f.minPrice.errors.required">Min Price is required</div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>Build Time:</label>
+      <input type="number" formControlName="buildTime" placeholder="Build Cost" class="form-control"
+        [ngClass]="{ 'is-invalid': submitted && f.buildTime.errors }">
+      <div *ngIf="submitted && f.buildTime.errors">
+        <div *ngIf="f.buildTime.errors.required">Build Cost is required</div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>Build Cost ($):</label>
+      <input type="number" formControlName="buildCost" placeholder="Build Cost" class="form-control"
+        [ngClass]="{ 'is-invalid': submitted && f.buildCost.errors }">
+      <div *ngIf="submitted && f.buildCost.errors">
+        <div *ngIf="f.buildCost.errors.required">Build Cost is required</div>
+      </div>
+    </div>
+
+    <button type="submit" class="btn btn-info">Save</button>
+  </form>
+</div>

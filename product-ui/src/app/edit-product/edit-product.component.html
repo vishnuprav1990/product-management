@@ -1,0 +1,137 @@
+<div>
+  <div class="card">
+    <div class="card-body">
+      <div class="itemCenter">
+        <img class="card-img-top productImage" alt="Card image cap" src="{{imageUrl}}" *ngIf="imageUrl">
+      </div>
+      <form [formGroup]="editForm" (ngSubmit)="onSubmit()">
+        <div class="form-group col-12">
+          <label>Name:</label>
+          <input type="text" formControlName="pname" placeholder="Product Name" class="form-control"
+            [ngClass]="{ 'is-invalid': submitted && f.pname.errors }">
+          <div *ngIf="submitted && f.pname.errors">
+            <div *ngIf="f.pname.errors.required">Product Name is required</div>
+          </div>
+        </div>
+        <div class="form-group col-12">
+          <label>Cateory:</label>
+          <select formControlName="categoryId" class="form-control"
+            [ngClass]="{ 'is-invalid': submitted && f.categoryId.errors }">
+            <option value="">--Please select--</option>
+            <option *ngFor="let category of categories" value="{{category._id}}">{{category.cname}}</option>
+          </select>
+
+          <div *ngIf="submitted && f.categoryId.errors">
+            <div *ngIf="f.categoryId.errors.required">Category is required</div>
+          </div>
+        </div>
+
+        <div class="progress form-group" *ngIf="progress > 0">
+          <div class="progress-bar progress-bar-striped bg-success" role="progressbar"
+            [style.width.%]="uploader.progress">
+          </div>
+        </div>
+        <div class="form-group file-upload col-12">
+          <label>Image:</label>
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <button type="button" class="input-group-text" (click)="uploader.uploadAll()"
+                [disabled]="!uploader.getNotUploadedItems().length">
+                Upload
+              </button>
+            </div>
+            <div class="custom-file">
+              <input type="file" name="image" class="custom-file-input" id="inputGroupFile01" ng2FileSelect
+                [uploader]="uploader" accept="image/x-png,image/gif,image/jpeg" class="form-control-file"
+                [ngClass]="{ 'is-invalid': submitted && f.fileUpload.errors }" />
+              <label class="custom-file-label" for="inputGroupFile01">Choose Image file</label>
+              <input type="hidden" formControlName="fileUpload">
+            </div>
+          </div>
+
+          <div *ngIf="submitted && f.fileUpload.errors">
+            <div *ngIf="f.fileUpload.errors.required">fileUpload is required</div>
+          </div>
+        </div>
+        <div class="row col-12">
+          <div class="col-6">
+            <div class="form-group">
+              <label>Max Price </label><img src="http://localhost:3000/images/currency_coins.png" height="30" />
+              <input type="number" formControlName="maxPrice" placeholder="Max Price" class="form-control"
+                [ngClass]="{ 'is-invalid': submitted && f.maxPrice.errors }">
+              <div *ngIf="submitted && f.maxPrice.errors">
+                <div *ngIf="f.maxPrice.errors.required">Max Price is required</div>
+              </div>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="form-group">
+              <label>Min Price </label><img src="http://localhost:3000/images/currency_coins.png" height="30" />
+              <input type="number" formControlName="minPrice" placeholder="Min Price" class="form-control"
+                [ngClass]="{ 'is-invalid': submitted && f.minPrice.errors }">
+              <div *ngIf="submitted && f.minPrice.errors">
+                <div *ngIf="f.minPrice.errors.required">Min Price is required</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row col-12">
+          <div class="col-6">
+            <div class="form-group">
+              <label>Build Time:</label>
+              <input type="number" formControlName="buildTime" placeholder="Build Cost" class="form-control"
+                [ngClass]="{ 'is-invalid': submitted && f.buildTime.errors }">
+              <div *ngIf="submitted && f.buildTime.errors">
+                <div *ngIf="f.buildTime.errors.required">Build Cost is required</div>
+              </div>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="form-group">
+              <label>Build Cost </label><img src="http://localhost:3000/images/currency_coins.png" height="30" />
+              <input type="number" formControlName="buildCost" placeholder="Build Cost" class="form-control"
+                [ngClass]="{ 'is-invalid': submitted && f.buildCost.errors }">
+              <div *ngIf="submitted && f.buildCost.errors">
+                <div *ngIf="f.buildCost.errors.required">Build Cost is required</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row col-12">
+          <div formArrayName="rawMaterials">
+            <label>Raw Materials</label>
+            <button type="button" class="btn btn-info counterBtn mainPlus" (click)="addRawMaterial()">+</button>
+            <div *ngFor="let material of editForm.get('rawMaterials').controls; let i=index" [formGroupName]="i">
+              <div  class="row col-12">
+                <div class="col-6">
+                  <div class="form-group">
+                    <label>Items</label>
+                    <select class="form-control" formControlName="item">
+                      <option value="">--Please select --</option>
+                      <option *ngFor="let product of productList" value="{{product._id}}">{{product.pname}}</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div class="form-group">
+                    <label for="">Count</label>
+                    <div class="row">
+                      <input type="number" class="form-control col-4" formControlName="count">
+                      <button class="btn btn-info counterBtn" (click)="addRawMaterial(i+1)">+</button>
+                      <button class="btn btn-info counterBtn" (click)="removeItem(i)">-</button>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+        <div class="col-12">
+          <button type="submit" class="btn btn-info">Save</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

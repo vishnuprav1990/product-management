@@ -1,0 +1,4 @@
+<form #searchForm="ngForm"  (ngSubmit)="search(searchForm)" novalidate>
+  <input type="search" name="search" ngModel  class="form-control d-inline col-9" placeholder="Search products.."/>
+  <button class="btn btn-info searchBtn col-3" type="submit">Search</button>
+</form>

@@ -1,0 +1,9 @@
+<ng-content></ng-content>
+<span class="float-right">
+  <div>
+    <i class="fa fa-caret-up" [ngClass]="(sortDirection=='asc')?'enabledArrow':'disabledArrow'"></i>
+  </div>
+  <div>
+    <i class="fa fa-caret-down" [ngClass]="(sortDirection=='desc')?'enabledArrow':'disabledArrow'"></i>
+  </div>
+</span>
