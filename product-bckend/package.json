@@ -10,7 +10,7 @@
   "license": "MIT",
   "dependencies": {
     "body-parser": "^1.20.3",
-    "express": "^4.21.2",
+    "express": "^4.22.0",
     "less-middleware": "^3.1.0",
     "mongoose": "^8.9.5",
     "multer": "^2.0.2",
